@@ -12,6 +12,43 @@ dict = {'trans1':['2/15/2023','The Lone Patty',17,569],
 
 order_total = 0
 
+#First Customer - Danni Sellyar
+#''' (<--remove Hashtag to run second customer)
+customer = fc.Customer(570, "Danni Sellyar", 
+                       "97 Mitchell Way Hewitt Texas 76712",
+                       "dsellyarft@gmpg.org", 
+                       "254-555-9362", False)
+           
 
+#Second Customer - Aubree Himsworth
+'''
+customer = fc.Customer(569, "Aubree Himsworth",
+                       "1172 Moulton Hill Waco Texas 76710",
+                       "ahimsworthfs@list-manage.com",
+                       "254-555-2273", True)
+#'''
 
+print(f"Customer Name: {customer.getName()}")
+print(f"Phone: {customer.getPhone()}")
 
+sale_total = 0
+discount = 0
+for sale in dict.keys():
+
+    # Create Transaction instance
+    transaction = fc.Transaction(dict[sale][0], dict[sale][1], dict[sale][2], dict[sale][3])
+    
+    # Compare Transaction Customer ID to current Customer
+    if transaction.getCustomerID() == customer.getID():
+        print(f"Order Item: {transaction.getItem()}  Price: ${transaction.getCost():,.2f}")
+        sale_total += transaction.getCost()
+    
+#Report Total Cost before discounts
+print(f"Total Cost: ${sale_total:,.2f}")
+
+# If Customer is a Member, apply discount
+if customer.isMember():
+    # 20% discount
+    print(f"Member Discount: ${round(sale_total * 0.20, 2):,.2f}")
+    sale_total -= round(sale_total * 0.20, 2)
+    print(f"Total Cost after discount: ${sale_total:,.2f}")
